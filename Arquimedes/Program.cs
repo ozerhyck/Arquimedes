@@ -1,9 +1,11 @@
 ﻿using CommandLine;
+using CommandLine.Text;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 
 namespace Arquimedes
 {
@@ -15,38 +17,23 @@ namespace Arquimedes
         [STAThread]
         static void Main(string[] args)
         {
-            Options config = Parse(args);
+            var parser = new Parser(bla => bla.HelpWriter = Console.Out);
+            var result = parser.ParseArguments<Options>(args);
+            var options = result.MapResult(o => o, o => null);
 
             try
             {
-                Console.WriteLine("___________________________________________________________________");
-                Console.WriteLine(@"---    ___                     _                    __          ---");
-                Console.WriteLine(@"---   /   |  _________ ___  __(_)___ ___  ___  ____/ /__  _____ ---");
-                Console.WriteLine(@"---  / /| | / ___/ __ `/ / / / / __ `__ \/ _ \/ __  / _ \/ ___/ ---");
-                Console.WriteLine(@"--- / ___ |/ /  / /_/ / /_/ / / / / / / /  __/ /_/ /  __(__  )  ---");
-                Console.WriteLine(@"---/_/  |_/_/   \__, /\__,_/_/_/ /_/ /_/\___/\__,_/\___/____/   ---");
-                Console.WriteLine(@"---               /_/                                           ---");
-                Console.WriteLine("___________________________________________________________________");
 
+                if (options.Help)
+                {
+                    Console.WriteLine(HelpText.AutoBuild<Options>(result));
+                    return;
+                }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                decimal HoraLimite = HourToDecimal(HourParse(config.Limite));
-                decimal HoraConcluida = HourToDecimal(HourParse(config.Atual)); 
+                decimal HoraLimite = HourToDecimal(HourParse(options.Limite));
+                decimal HoraConcluida = HourToDecimal(HourParse(options.Atual));
                 decimal HoraFaltando = HoraLimite - HoraConcluida;
-                                
+
                 var resultado = HoraFaltando / daysToEndMonth();
                 double teste = Convert.ToDouble(resultado);
                 var resultadoHoras = TimeSpan.FromHours(teste).ToString("h\\:mm");
@@ -59,12 +46,11 @@ namespace Arquimedes
             }
             catch (Exception)
             {
-                Console.WriteLine("Pare de agir como bobo.");
+                //Console.WriteLine("Pare de agir como bobo.");
             }
 
         }
 
-         
         private static int daysToEndMonth()
         {
             var hoje = DateTime.Now.Date.AddDays(-1);
@@ -77,7 +63,7 @@ namespace Arquimedes
         }
 
         private static string HourParse(string hour)
-        {            
+        {
             if (!hour.Contains(':'))
             {
                 hour = hour + ":00";
@@ -86,8 +72,8 @@ namespace Arquimedes
         }
 
         private static decimal HourToDecimal(string hour)
-        {            
-            return Convert.ToDecimal(Convert.ToDecimal(hour.Split(':')[0]) + Convert.ToDecimal(TimeSpan.Parse("00:" + hour.Split(':')[1]).TotalHours)); 
+        {
+            return Convert.ToDecimal(Convert.ToDecimal(hour.Split(':')[0]) + Convert.ToDecimal(TimeSpan.Parse("00:" + hour.Split(':')[1]).TotalHours));
         }
 
         private static string DecimalToHour(decimal hour)
@@ -119,17 +105,8 @@ namespace Arquimedes
 
             return contador;
         }
-
-        internal static Options Parse(string[] args)
-        {
-            var parser = new Parser(bla => bla.HelpWriter = Console.Out);
-            var result = parser.ParseArguments<Options>(args);
-            var config = result.MapResult(o => o, o => null);
-
-            return config;
-        }
-
     }
+
     public class Options
     {
         [Option('l', "limite", Required = true, HelpText = "Informe o limite de horas nesse mes.")]
@@ -137,5 +114,10 @@ namespace Arquimedes
 
         [Option('a', "atual", Required = true, HelpText = "Informe a quantidade de horas trabalhadas.")]
         public string Atual { get; set; }
+
+        [Option('h', "help", Required = false, Default = false, HelpText = "Acesso ´rapido ao Help")]
+        public bool Help { get; set; }
     }
 }
+
+
