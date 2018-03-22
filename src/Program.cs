@@ -1,10 +1,9 @@
-﻿using CommandLine;
+﻿using Arquimedes.MDL;
+using CommandLine;
 using CommandLine.Text;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Arquimedes
 {
@@ -100,17 +99,6 @@ namespace Arquimedes
         }
     }
 
-    public class Options
-    {
-        [Option('l', "limite", Required = true, HelpText = "Informe o limite de horas nesse mes.")]
-        public string Limite { get; set; }
-
-        [Option('a', "atual", Required = true, HelpText = "Informe a quantidade de horas trabalhadas.")]
-        public string Atual { get; set; }
-
-        [Option('h', "help", Required = false, Default = false, HelpText = "Acesso ´rapido ao Help")]
-        public bool Help { get; set; }
-    }
 }
 
 
