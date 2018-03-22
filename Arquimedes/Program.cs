@@ -2,6 +2,7 @@
 using CommandLine.Text;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -40,9 +41,6 @@ namespace Arquimedes
 
                 Console.WriteLine("Faltam " + DecimalToHour(HoraFaltando) + "h.\nNos próximos " + daysToEndMonth() + " dias, faça " + resultadoHoras + "h por dia.");
 
-                Console.ReadKey();
-                Console.Clear();
-
             }
             catch (Exception)
             {
@@ -56,8 +54,8 @@ namespace Arquimedes
             var hoje = DateTime.Now.Date.AddDays(-1);
             var ultimoDiaDoMes = hoje.AddDays(-(hoje.Day - 1)).AddMonths(1).AddDays(-1);
             var primeiroDia = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-
-            var diasFaltantes = ultimoDiaDoMes.AddDays(hoje.Day * -1).Day - FinsDeSemana();
+            var Feriados = Convert.ToInt32(ConfigurationManager.AppSettings["FeriadosMes"]);
+            var diasFaltantes = ultimoDiaDoMes.AddDays(hoje.Day * -1).Day - FinsDeSemana() - Feriados;
 
             return diasFaltantes;
         }
