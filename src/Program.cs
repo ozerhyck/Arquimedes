@@ -23,6 +23,12 @@ namespace Arquimedes
                     return;
                 }
 
+                if (options.Dias )
+                {
+                    Console.WriteLine(Time.DiasUteis());
+                    return;
+                }
+
                 Console.WriteLine(Time.Response(options));
             }
             catch (Exception ex)
