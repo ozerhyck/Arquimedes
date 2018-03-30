@@ -30,6 +30,7 @@ namespace Arquimedes
                 }
 
                 Console.WriteLine(Time.Response(options));
+
             }
             catch (Exception ex)
             {
