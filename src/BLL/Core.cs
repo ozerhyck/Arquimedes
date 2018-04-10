@@ -28,7 +28,7 @@ namespace Arquimedes.BLL
             var Feriados = Convert.ToInt32(ConfigurationManager.AppSettings["FeriadosMes"]);
             var fds = TotalFinsDeSemana();
 
-            var diasUteis = ultimoDiaDoMes.Day - fds - Feriados;
+            var diasUteis = 1 + ultimoDiaDoMes.Day - fds - Feriados;
             return diasUteis;
         }
 

@@ -43,6 +43,10 @@ namespace Arquimedes.BLL
         {
             return $"Este mes tem {Core.UsualDays()} dias uteis." ;
         }
-        
+
+        public static string HorasMes(int horasdia)
+        {
+            return $"Para {horasdia} horas por dia, neste mes deve se limitar a {(int)(Core.UsualDays() * horasdia)} horas";
+        }        
     }
 }

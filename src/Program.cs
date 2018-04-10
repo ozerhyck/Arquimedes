@@ -17,15 +17,16 @@ namespace Arquimedes
 
             try
             {
-                if (options.Help)
-                {
-                    Console.WriteLine(HelpText.AutoBuild<Options>(result));
-                    return;
-                }
 
                 if (options.Dias )
                 {
                     Console.WriteLine(Time.DiasUteis());
+                    return;
+                }
+
+                if (options.HorasPorDia > 0)
+                {
+                    Console.WriteLine(Time.HorasMes(options.HorasPorDia));
                     return;
                 }
 
