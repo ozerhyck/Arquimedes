@@ -1,7 +1,6 @@
 ﻿using Arquimedes.MDL;
 using Arquimedes.BLL;
 using CommandLine;
-using CommandLine.Text;
 using System;
 
 namespace Arquimedes
@@ -17,8 +16,7 @@ namespace Arquimedes
 
             try
             {
-
-                if (options.Dias )
+                if (options.Dias)
                 {
                     Console.WriteLine(Time.DiasUteis());
                     return;
@@ -26,7 +24,7 @@ namespace Arquimedes
 
                 if (options.HorasPorDia > 0)
                 {
-                    Console.WriteLine(Time.HorasMes(options.HorasPorDia));
+                    Console.WriteLine(Time.HorasMes(options));
                     return;
                 }
 
