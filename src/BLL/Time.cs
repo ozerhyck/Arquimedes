@@ -1,5 +1,4 @@
 ﻿using Arquimedes.MDL;
-using Arquimedes.BLL;
 using System;
 
 namespace Arquimedes.BLL
@@ -32,11 +31,19 @@ namespace Arquimedes.BLL
             else if (diasParaFimdoMes > 0)
             {
                 //Segue
-                var resultado = HoraFaltando / Mes.DiasFaltando(options); 
+                var resultado = Math.Round(HoraFaltando / Mes.DiasFaltando(options),4,MidpointRounding.ToEven); 
+
+
+                var teste = TimeSpan.FromMinutes(Convert.ToDouble(resultado));
+                var teste2 = teste.TotalMinutes;
+                var minutesconv = teste2 * Mes.DiasFaltando(options);
+                TimeSpan converted = TimeSpan.FromHours(minutesconv);
+
+
 
                 retorno = "Faltam " + HoraFaltando.DecimalParaHora() +
                           "h.\nNos próximos " + Mes.DiasFaltando(options)  + 
-                          " dias, faça " + TimeSpan.FromHours(Convert.ToDouble(resultado)).ToString("h\\:mm") + "h por dia.";
+                          " dias, faça " + TimeSpan.FromHours(Convert.ToDouble(resultado)).ToString("h\\:mm") + "h por dia. Isso da um total de " + converted.ToString("h\\:mm") + "h no fim.";
             }
 
             return retorno;
