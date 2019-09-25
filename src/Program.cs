@@ -1,14 +1,14 @@
-﻿using Arquimedes.MDL;
-using Arquimedes.BLL;
-using CommandLine;
 using System;
+using Arquimedes.BLL;
+using Arquimedes.MDL;
+using CommandLine;
 
 namespace Arquimedes
 {
-    static class Program
+    internal static class Program
     {
         [STAThread]
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             var parser = new Parser(bla => bla.HelpWriter = Console.Out);
             var result = parser.ParseArguments<Options>(args);
@@ -35,7 +35,7 @@ namespace Arquimedes
             {
                 Console.WriteLine("Error: " + ex.Message);
             }
-        }        
+        }
     }
 
 }
