@@ -1,4 +1,4 @@
-﻿using CommandLine;
+using CommandLine;
 
 namespace Arquimedes.MDL
 {
@@ -16,7 +16,7 @@ namespace Arquimedes.MDL
         [Option('d', "dias", Required = false, Default = false, HelpText = "Retorna a quantidade de dias uteis do mês.")]
         public bool Dias { get; set; }
 
-        [Option('t', "horaspordia", Required = false, Default = 0, HelpText = "Retorna a quantidade dehoras do mes, baseado nas horas por dia.")]
+        [Option('t', "horaspordia", Required = false, Default = 0, HelpText = "Retorna a quantidade de horas do mes, baseado nas horas por dia.")]
         public int HorasPorDia { get; set; }
 
     }

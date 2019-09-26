@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 
 namespace Arquimedes.BLL
@@ -19,13 +19,14 @@ namespace Arquimedes.BLL
             hour = hour.FormataHora();
             return Convert.ToDecimal(Convert.ToDecimal(hour.Split(':')[0]) + Convert.ToDecimal(TimeSpan.Parse("00:" + hour.Split(':')[1]).TotalHours));
         }
-
-        public static string DecimalParaHora(this decimal hour)
+        public static TimeSpan DecimalParaHora(this decimal hour)
         {
-            var h = Convert.ToDouble(hour);
-            var time = TimeSpan.FromHours(h).ToString("mm");
+            return TimeSpan.FromHours(Convert.ToDouble(hour));
+        }
 
-            return Convert.ToInt32(h.ToString().Split(',')[0]).ToString() + ":" + time;
+        public static string DecimalParaHoraString(this decimal hour)
+        {
+            return hour.DecimalParaHora().ToString("h\\:mm");
         }
     }
 }

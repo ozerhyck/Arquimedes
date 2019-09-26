@@ -8,7 +8,7 @@ namespace Arquimedes.BLL
         public static string Response(Options options)
         {
             var horaLimite = options.Limite.HoraParaDecimal();
-            var horaConcluida = (options.Atual != string.Empty ? options.Atual.HoraParaDecimal() : options.Agora.HoraParaDecimal());
+            var horaConcluida = !string.IsNullOrEmpty(options.Atual) ? options.Atual.HoraParaDecimal() : options.Agora.HoraParaDecimal();
             var horaFaltando = horaLimite - horaConcluida;
             var retorno = string.Empty;
             var diasParaFimdoMes = Mes.DiasFaltando(options);
@@ -20,12 +20,11 @@ namespace Arquimedes.BLL
 
                 if (horaFaltando < 0)
                 {
-                    retorno = "Voce ja passou " + TimeSpan.FromHours(Convert.ToDouble(resultado)).ToString("h\\:mm") + "h do seu limite.";
+                    retorno = "Voce ja passou " + resultado.DecimalParaHoraString() + "h do seu limite.";
                 }
                 else
                 {
-                    retorno = "Faltam " + horaFaltando.DecimalParaHora() +
-                                  "h.\nHoje faça " + TimeSpan.FromHours(Convert.ToDouble(resultado)).ToString("h\\:mm") + "h.";
+                    retorno = "Faltam " + horaFaltando.DecimalParaHoraString() + "h.\nHoje faça " + resultado.DecimalParaHoraString() + "h.";
                 }
             }
             else if (diasParaFimdoMes > 0)
@@ -41,9 +40,9 @@ namespace Arquimedes.BLL
 
 
 
-                retorno = "Faltam " + horaFaltando.DecimalParaHora() +
+                retorno = "Faltam " + horaFaltando.DecimalParaHoraString() +
                           "h.\nNos próximos " + Mes.DiasFaltando(options) +
-                          " dias, faça " + TimeSpan.FromHours(Convert.ToDouble(resultado)).ToString("h\\:mm") + "h por dia. Isso da um total de " + converted.ToString("h\\:mm") + "h no fim.";
+                          " dias, faça " + resultado.DecimalParaHoraString() + "h por dia. Isso da um total de " + converted.ToString("h\\:mm") + "h no fim.";
             }
 
             return retorno;
@@ -56,7 +55,7 @@ namespace Arquimedes.BLL
         {
             var hpordia = options.HorasPorDia.ToString().FormataHora();
             var hpordiadecimal = options.HorasPorDia.ToString().HoraParaDecimal();
-            return $"Para {hpordia} horas por dia, neste mes deve se limitar a {(Mes.DiasFaltando(options) * hpordiadecimal)} horas";
+            return $"Para {hpordia} horas por dia, neste mes deve se limitar a {Mes.DiasFaltando(options) * hpordiadecimal} horas";
         }
     }
 }
